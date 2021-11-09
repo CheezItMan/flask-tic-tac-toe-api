@@ -29,6 +29,7 @@ def create_app(test_config=None):
 
     # Import Models Here!
     from models.player import Player
+    from models.game import Game
 
     # Hook up Flask & SQL Alchemy
     db.init_app(app)
