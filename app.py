@@ -28,6 +28,7 @@ def create_app(test_config=None):
         'DATABASE_CONNECTION_STRING')
 
     # Import Models Here!
+    from models.player import Player
 
     # Hook up Flask & SQL Alchemy
     db.init_app(app)
