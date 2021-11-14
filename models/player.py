@@ -12,6 +12,9 @@ class Player(db.Model):
 
     uid = db.Column(db.String(256), unique=True)
 
+    # TODO: add a get_game_history method
+    #   that returns a list of games played by this player
+
     def to_dict(self):
         return {
             "id": self.id,
