@@ -7,7 +7,6 @@ from flask import request
 class TicTacToeGame(Resource):
     def post(self):
         body = request.get_json(force=True)
-        print(body)
 
         player_x_id = int(body['player_x_id'])
         player_o_id = int(body['player_o_id'])
