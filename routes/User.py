@@ -7,7 +7,7 @@ from flask import request
 
 class User(Resource):
     def post(self):
-        body = request.get_json(force=True)
+        body = request.get_json()
 
         if "name" in body:
             new_player = Player(name=body["name"])
@@ -18,8 +18,7 @@ class User(Resource):
             return {"error": "name is required"}, 400
 
 
-    def get(self):
-        player_id = request.args['player_id']
+    def get(self, player_id):
         player = Player.query.get(player_id)
 
         if not player:
@@ -34,11 +33,10 @@ class User(Resource):
         }, 200
 
 
-    def put(self):
-        body = request.get_json(force=True)
-        player_id = request.args['player_id']
+    def put(self, player_id):
+        body = request.get_json()
         player = Player.query.get(player_id)
-        
+
         if not player:
             return {"error": f"Could not find player {player_id}"}, 404
         
@@ -54,8 +52,7 @@ class User(Resource):
         }, 200
 
 
-    def delete(self):
-        player_id = request.args['player_id']
+    def delete(self, player_id):
         player = Player.query.get(player_id)
 
         if player: 

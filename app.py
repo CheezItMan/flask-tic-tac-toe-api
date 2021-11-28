@@ -25,7 +25,7 @@ def create_app(test_config=None):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Add Resources
-    api.add_resource(User, '/tictactoe/player/v1')
+    api.add_resource(User, '/tictactoe/player/v1', '/tictactoe/player/v1/<int:player_id>')
     api.add_resource(TicTacToeGame, '/tictactoe/game/v1/<int:game_id>', '/tictactoe/game/v1', )
 
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(

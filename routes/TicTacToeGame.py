@@ -6,10 +6,13 @@ from flask import request
 
 class TicTacToeGame(Resource):
     def post(self):
-        body = request.get_json(force=True)
+        body = request.get_json()
 
-        player_x_id = int(body['player_x_id'])
-        player_o_id = int(body['player_o_id'])
+        try:
+            player_x_id = int(body['player_x_id'])
+            player_o_id = int(body['player_o_id'])
+        except ValueError: 
+            return {"error": f"Could not create game - Player IDs must be integers"}, 500
 
         new_game = Game(player_x_id=player_x_id, player_o_id=player_o_id, winner=None) 
 
@@ -30,8 +33,7 @@ class TicTacToeGame(Resource):
         }, 201
 
 
-    def get(self):
-        game_id = request.args['game_id']
+    def get(self, game_id):
         game = Game.query.get(game_id)
 
         if not game:
@@ -47,17 +49,25 @@ class TicTacToeGame(Resource):
         }, 200
 
 
-    def put(self):
-        game_id = request.args['game_id']
-        body = request.get_json(force=True)
-
+    def put(self, game_id):
+        body = request.get_json()
         game = Game.query.get(game_id)
+
         if not game:
             return {"error": f"Could not find game {game_id}"}, 404
         
-        game.winner = int(body["winner"])
-        game.player_x_id = body["player_x_id"]
-        game.player_o_id = body["player_o_id"]
+        try:
+            game.winner = int(body["winner"])
+        except ValueError:
+            game.winner = None 
+
+        try:
+            game.player_x_id = int(body["player_x_id"])
+            game.player_o_id = int(body["player_o_id"])
+        except ValueError: 
+            return {"error": f"Could not update game - Player IDs must be integers"}, 500
+        
+
         db.session.commit()
 
         return {
@@ -70,8 +80,7 @@ class TicTacToeGame(Resource):
         }, 200
 
 
-    def delete(self):
-        game_id = request.args['game_id']
+    def delete(self, game_id):
         game = Game.query.get(game_id)
 
         if game: 
