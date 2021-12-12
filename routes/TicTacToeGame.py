@@ -22,15 +22,7 @@ class TicTacToeGame(Resource):
         if not new_game:
             return {"error": f"Could not create game"}, 500
 
-
-        return {
-            "game": {
-                "id": new_game.id, 
-                "winner": new_game.winner,
-                "player_x_id": new_game.player_x_id,
-                "player_o_id": new_game.player_o_id
-            }
-        }, 201
+        return new_game.to_dict(), 201
 
 
     def get(self, game_id):
@@ -39,14 +31,7 @@ class TicTacToeGame(Resource):
         if not game:
             return {"error": f"Could not find game {game_id}"}, 404
         
-        return {
-            "game": {
-                "id": game.id, 
-                "winner": game.winner,
-                "player_x_id": game.player_x_id,
-                "player_o_id": game.player_o_id
-            }
-        }, 200
+        return game.to_dict(), 200
 
 
     def put(self, game_id):
@@ -70,14 +55,7 @@ class TicTacToeGame(Resource):
 
         db.session.commit()
 
-        return {
-            "game": {
-                "id": game.id,
-                "winner": int(game.winner),
-                "player_x_id": game.player_x_id,
-                "player_o_id": game.player_o_id,
-            }
-        }, 200
+        return game.to_dict(), 200
 
 
     def delete(self, game_id):

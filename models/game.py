@@ -12,10 +12,10 @@ class Game(db.Model):
     player_o = db.relationship("Player", foreign_keys="Game.player_o_id")
 
 
-def to_dict(self):
-    return {
-        "id": self.id,
-        "winner": self.winner,
-        "player_x": self.player_x.to_dict(),
-        "player_o": self.player_o.to_dict()
-    }
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "winner": self.winner,
+            "player_x": self.player_x.to_dict(),
+            "player_o": self.player_o.to_dict()
+        }

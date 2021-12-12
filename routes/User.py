@@ -23,14 +23,8 @@ class User(Resource):
 
         if not player:
             return {"error": f"Could not find player {player_id}"}, 404
-        
-        return {
-            "player": {
-                "id": player.id, 
-                "name": player.name,
-                "uid": player.uid,
-            }
-        }, 200
+
+        return player.to_dict(), 200
 
 
     def put(self, player_id):
@@ -43,13 +37,7 @@ class User(Resource):
         player.name = body["name"]
         db.session.commit()
 
-        return {
-            "player": {
-                "id": player.id,
-                "name": player.name,
-                "uid": player.uid
-            }
-        }, 200
+        return player.to_dict(), 200
 
 
     def delete(self, player_id):
