@@ -1,7 +1,7 @@
 
 from flask import Flask
 from flask_restful import Api
-
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from dotenv import load_dotenv
@@ -19,6 +19,7 @@ def create_app(test_config=None):
     from routes.TicTacToeGame import TicTacToeGame
     
     app = Flask(__name__)
+    CORS(app)
     api = Api(app)
 
     # Config App and SQL Alchemy
@@ -44,3 +45,4 @@ def create_app(test_config=None):
 if __name__ == '__main__':
     app = create_app()
     app.run(debug=True)
+
