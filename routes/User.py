@@ -10,10 +10,16 @@ class User(Resource):
         body = request.get_json()
 
         if "name" in body:
-            new_player = Player(name=body["name"])
-            Player.query.session.add(new_player)
-            Player.query.session.commit()
-            return new_player.to_dict(), 201
+            # player = Player.query.filter(Player.name == body["name"])
+            player = Player.query.filter_by(name=body["name"])
+
+            if player.count() >= 1:
+                return player[0].to_dict(), 200
+            elif player.count() == 0:
+                new_player = Player(name=body["name"])
+                Player.query.session.add(new_player)
+                Player.query.session.commit()
+                return new_player.to_dict(), 201
         else:
             return {"error": "name is required"}, 400
 
