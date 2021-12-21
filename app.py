@@ -22,7 +22,7 @@ def create_app(test_config=None):
     
     app = Flask(__name__)
     CORS(app)
-    socketio = SocketIO(app)
+    socketio = SocketIO(app, cors_allowed_origins="*")
     api = Api(app)
 
     # Config App and SQL Alchemy
