@@ -6,6 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from dotenv import load_dotenv
 import os
+from flask import Flask, render_template
+from flask_socketio import SocketIO
 
 # Initialize SQL Alchemy
 db = SQLAlchemy()
@@ -20,6 +22,7 @@ def create_app(test_config=None):
     
     app = Flask(__name__)
     CORS(app)
+    socketio = SocketIO(app, cors_allowed_origins="*")
     api = Api(app)
 
     # Config App and SQL Alchemy
@@ -36,9 +39,15 @@ def create_app(test_config=None):
     from models.player import Player
     from models.game import Game
 
+    @socketio.on('message')
+    def handle_message(data):
+        print('received message: ' + data)
+
     # Hook up Flask & SQL Alchemy
     db.init_app(app)
     migrate.init_app(app, db)
+    socketio.run(app)
+
     return app
 
 
