@@ -46,11 +46,12 @@ def create_app(test_config=None):
     # Hook up Flask & SQL Alchemy
     db.init_app(app)
     migrate.init_app(app, db)
+    socketio.run(app)
+
     return app
 
 
 if __name__ == '__main__':
     app = create_app()
-    socketio.run(app)
     app.run(debug=True)
 
