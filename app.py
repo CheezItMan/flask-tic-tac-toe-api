@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 from dotenv import load_dotenv
 import os
 from flask import Flask, render_template
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, send, emit
 
 # Initialize SQL Alchemy
 db = SQLAlchemy()
@@ -42,6 +42,7 @@ def create_app(test_config=None):
     @socketio.on('message')
     def handle_message(data):
         print('received message: ' + data)
+        emit("new_message", data, broadcast=True)
 
     # Hook up Flask & SQL Alchemy
     db.init_app(app)
