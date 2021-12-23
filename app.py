@@ -41,7 +41,8 @@ def create_app(test_config=None):
 
     @socketio.on('message')
     def handle_message(data):
-        print('received message: ' + data)
+        # print('received message: ' + data)
+        app.logger.info('logged in successfully')
         emit("new_message", data, broadcast=True)
 
     # Hook up Flask & SQL Alchemy
