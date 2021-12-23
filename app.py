@@ -21,8 +21,8 @@ def create_app(test_config=None):
     from routes.TicTacToeGame import TicTacToeGame
     
     app = Flask(__name__)
-    CORS(app)
     socketio = SocketIO(app, cors_allowed_origins="*")
+    CORS(app)
     api = Api(app)
 
     # Config App and SQL Alchemy
